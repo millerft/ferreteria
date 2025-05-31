@@ -1,4 +1,7 @@
 // script.js
+// Importa los datos iniciales desde data.js
+import { initialCategories, initialProducts } from './data.js';
+
 // Arrays para almacenar los productos en el carrito
 let cart = [];
 let categories = [];
@@ -45,24 +48,14 @@ function initializeData() {
         }
     }
 
-    // Si no hay productos ni categorías, añadir algunos de ejemplo
+    // Si no hay productos ni categorías en localStorage, usar los datos iniciales de data.js
     if (products.length === 0 && categories.length === 0) {
-        categories = [
-            { id: 'cat-1', name: 'Herramientas Manuales', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Manual' },
-            { id: 'cat-2', name: 'Fijaciones', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Fijaciones' },
-            { id: 'cat-3', name: 'Medición', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Medicion' }
-        ];
-        products = [
-            { id: 'prod-1', name: 'Martillo de Uña', description: 'Un martillo robusto para trabajos de carpintería y construcción.', price: 15.99, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Martillo', categoryId: 'cat-1', stock: 50 },
-            { id: 'prod-2', name: 'Set de Tornillos Variados', description: 'Caja con tornillos de diferentes tamaños y tipos.', price: 8.50, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Tornillos', categoryId: 'cat-2', stock: 120 },
-            { id: 'prod-3', name: 'Cinta Métrica 5m', description: 'Cinta métrica retráctil de alta precisión.', price: 7.25, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Cinta+Métrica', categoryId: 'cat-3', stock: 75 },
-            { id: 'prod-4', name: 'Taladro Inalámbrico', description: 'Ideal para perforar y atornillar en madera, metal y plástico.', price: 79.99, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Taladro', categoryId: 'cat-1', stock: 30 },
-            { id: 'prod-5', name: 'Llave Inglesa Ajustable', description: 'Una herramienta esencial para cualquier caja de herramientas.', price: 12.50, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Llave+Inglesa', categoryId: 'cat-1', stock: 90 },
-            { id: 'prod-6', name: 'Set de Destornilladores', description: 'Variedad de puntas para todo tipo de tornillos.', price: 25.00, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Set+Destornilladores', categoryId: 'cat-1', stock: 60 }
-        ];
-        saveCategories();
-        saveProducts();
+        categories = [...initialCategories]; // Usar una copia para no modificar el array original
+        products = [...initialProducts];     // Usar una copia
+        saveCategories(); // Guardar los datos iniciales en localStorage por primera vez
+        saveProducts();   // Guardar los datos iniciales en localStorage por primera vez
     }
+    
     updateCartDisplay(); // Actualizar el contador del carrito en todas las páginas
     renderProducts(); // Renderizar productos en index.html
     renderCategoryFilters(); // Renderizar las categorías en el filtro de index.html
@@ -152,7 +145,7 @@ function addProductToCart(productId, productName, productPrice) {
         if (existingItem.quantity < product.stock) {
             existingItem.quantity++;
         } else {
-            console.warn(`No se puede añadir más de ${productName}. Stock máximo alcanzado.`);
+            console.warn(`No se puede añadir más de ${product.name}. Stock máximo alcanzado.`);
             return;
         }
     } else {
@@ -721,14 +714,38 @@ function editImage(itemId, itemType, itemName) {
     const editImageItemIdInput = document.getElementById('edit-image-item-id');
     const editImageItemCategoryTypeInput = document.getElementById('edit-image-item-category-type');
     const editImageMessage = document.getElementById('edit-image-message');
-    const editImageFileInput = document.getElementById('edit-image-file-input');
+    const imageFileInput = document.getElementById('edit-image-file-input');
+    const imageUrlInput = document.getElementById('edit-image-url-input');
+    const fileInputContainer = document.getElementById('image-file-input-container');
+    const urlInputContainer = document.getElementById('image-url-input-container');
+    const radioFile = document.querySelector('input[name="image-input-type"][value="file"]');
+    const editImagePreview = document.getElementById('edit-image-preview'); // Get the preview element
 
     editImageItemTypeSpan.textContent = itemType === 'category' ? 'Categoría' : 'Producto';
     editImageItemNameSpan.textContent = itemName;
     editImageItemIdInput.value = itemId;
     editImageItemCategoryTypeInput.value = itemType;
     editImageMessage.textContent = ''; // Clear previous messages
-    editImageFileInput.value = ''; // Clear file input
+    imageFileInput.value = ''; // Clear file input
+    imageUrlInput.value = ''; // Clear URL input
+
+    // Set initial preview image based on current item's image
+    let currentImageUrl = '';
+    if (itemType === 'category') {
+        const category = categories.find(cat => cat.id === itemId);
+        if (category) currentImageUrl = category.imageUrl;
+    } else if (itemType === 'product') {
+        const product = products.find(prod => prod.id === itemId);
+        if (product) currentImageUrl = product.imageUrl;
+    }
+    editImagePreview.src = currentImageUrl || 'https://placehold.co/150x150/e0e0e0/555555?text=Preview'; // Set preview or fallback
+
+    // Reset to file input by default
+    if (radioFile) {
+        radioFile.checked = true;
+    }
+    fileInputContainer.classList.remove('hidden');
+    urlInputContainer.classList.add('hidden');
 
     editImageModal.style.display = 'flex';
 }
@@ -737,55 +754,82 @@ function editImage(itemId, itemType, itemName) {
 function saveImageEdit() {
     const itemId = document.getElementById('edit-image-item-id').value;
     const itemType = document.getElementById('edit-image-item-category-type').value;
-    const imageFile = document.getElementById('edit-image-file-input').files[0];
     const editImageMessage = document.getElementById('edit-image-message');
+    
+    const selectedInputType = document.querySelector('input[name="image-input-type"]:checked').value;
+    let newImageUrl = '';
 
-    if (!imageFile) {
-        editImageMessage.textContent = 'Por favor, selecciona una imagen.';
-        editImageMessage.style.color = 'red';
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-        const newImageUrl = reader.result;
-        if (itemType === 'category') {
-            const categoryIndex = categories.findIndex(cat => cat.id === itemId);
-            if (categoryIndex > -1) {
-                categories[categoryIndex].imageUrl = newImageUrl;
-                saveCategories();
-                renderCategories();
-                renderCategoryFilters(); // Update category filter on index.html
-                editImageMessage.textContent = 'Imagen de categoría actualizada exitosamente.';
-                editImageMessage.style.color = 'green';
-            } else {
-                editImageMessage.textContent = 'Error: Categoría no encontrada.';
-                editImageMessage.style.color = 'red';
-            }
-        } else if (itemType === 'product') {
-            const productIndex = products.findIndex(prod => prod.id === itemId);
-            if (productIndex > -1) {
-                products[productIndex].imageUrl = newImageUrl;
-                saveProducts();
-                renderProductsDevMode();
-                renderProducts(); // Update product display on index.html
-                editImageMessage.textContent = 'Imagen de producto actualizada exitosamente.';
-                editImageMessage.style.color = 'green';
-            } else {
-                editImageMessage.textContent = 'Error: Producto no encontrado.';
-                editImageMessage.style.color = 'red';
-            }
+    if (selectedInputType === 'file') {
+        const imageFile = document.getElementById('edit-image-file-input').files[0];
+        if (!imageFile) {
+            editImageMessage.textContent = 'Por favor, selecciona una imagen desde el archivo.';
+            editImageMessage.style.color = 'red';
+            return;
         }
-        setTimeout(() => {
-            document.getElementById('edit-image-modal').style.display = 'none';
-            editImageMessage.textContent = '';
-        }, 1500); // Hide modal after a short delay
-    };
-    reader.onerror = () => {
-        editImageMessage.textContent = 'Error al leer el archivo de imagen.';
-        editImageMessage.style.color = 'red';
-    };
-    reader.readAsDataURL(imageFile);
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            newImageUrl = reader.result;
+            updateItemImage(itemId, itemType, newImageUrl, editImageMessage);
+        };
+        reader.onerror = () => {
+            editImageMessage.textContent = 'Error al leer el archivo de imagen.';
+            editImageMessage.style.color = 'red';
+        };
+        reader.readAsDataURL(imageFile);
+    } else if (selectedInputType === 'url') {
+        newImageUrl = document.getElementById('edit-image-url-input').value;
+        if (!newImageUrl) {
+            editImageMessage.textContent = 'Por favor, ingresa una URL de imagen.';
+            editImageMessage.style.color = 'red';
+            return;
+        }
+        // Basic URL validation
+        if (!newImageUrl.startsWith('http://') && !newImageUrl.startsWith('https://')) {
+            editImageMessage.textContent = 'La URL debe comenzar con http:// o https://';
+            editImageMessage.style.color = 'red';
+            return;
+        }
+        updateItemImage(itemId, itemType, newImageUrl, editImageMessage);
+    }
+}
+
+// Helper function to update the image URL for an item
+function updateItemImage(itemId, itemType, newImageUrl, messageElement) {
+    // Log the new URL being set for debugging
+    console.log(`Attempting to update ${itemType} ID: ${itemId} with new image URL:`, newImageUrl);
+
+    if (itemType === 'category') {
+        const categoryIndex = categories.findIndex(cat => cat.id === itemId);
+        if (categoryIndex > -1) {
+            categories[categoryIndex].imageUrl = newImageUrl;
+            saveCategories();
+            renderCategories();
+            renderCategoryFilters(); // Update category filter on index.html
+            messageElement.textContent = 'Imagen de categoría actualizada exitosamente.';
+            messageElement.style.color = 'green';
+        } else {
+            messageElement.textContent = 'Error: Categoría no encontrada.';
+            messageElement.style.color = 'red';
+        }
+    } else if (itemType === 'product') {
+        const productIndex = products.findIndex(prod => prod.id === itemId);
+        if (productIndex > -1) {
+            products[productIndex].imageUrl = newImageUrl;
+            saveProducts();
+            renderProductsDevMode();
+            renderProducts(); // Update product display on index.html
+            messageElement.textContent = 'Imagen de producto actualizada exitosamente.';
+            messageElement.style.color = 'green';
+        } else {
+            messageElement.textContent = 'Error: Producto no encontrado.';
+            messageElement.style.color = 'red';
+        }
+    }
+    setTimeout(() => {
+        document.getElementById('edit-image-modal').style.display = 'none';
+        messageElement.textContent = '';
+    }, 1500); // Hide modal after a short delay
 }
 
 
@@ -1021,6 +1065,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeEditImageModalBtn = document.getElementById('close-edit-image-modal');
     const cancelImageEditBtn = document.getElementById('cancel-image-edit-btn');
     const editImageForm = document.getElementById('edit-image-form');
+    const imageInputTypeRadios = document.querySelectorAll('input[name="image-input-type"]');
+    const imageFileInputContainer = document.getElementById('image-file-input-container');
+    const imageUrlInputContainer = document.getElementById('image-url-input-container');
+    const editImagePreview = document.getElementById('edit-image-preview'); // Get the preview element
 
 
     if (adminLoginModal) {
@@ -1144,6 +1192,58 @@ document.addEventListener('DOMContentLoaded', () => {
             saveImageEdit();
         });
     }
+
+    // Event listeners for image input type radios
+    if (imageInputTypeRadios) {
+        imageInputTypeRadios.forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                if (event.target.value === 'file') {
+                    imageFileInputContainer.classList.remove('hidden');
+                    imageUrlInputContainer.classList.add('hidden');
+                    document.getElementById('edit-image-url-input').value = ''; // Clear URL input when switching
+                    // Set preview to default placeholder when switching to file input
+                    editImagePreview.src = 'https://placehold.co/150x150/e0e0e0/555555?text=Preview';
+                } else {
+                    imageFileInputContainer.classList.add('hidden');
+                    imageUrlInputContainer.classList.remove('hidden');
+                    document.getElementById('edit-image-file-input').value = ''; // Clear file input when switching
+                    // Set preview to default placeholder when switching to URL input
+                    editImagePreview.src = 'https://placehold.co/150x150/e0e0e0/555555?text=Preview';
+                }
+            });
+        });
+    }
+
+    // Event listener for file input change to update preview
+    const editImageFileInput = document.getElementById('edit-image-file-input');
+    if (editImageFileInput) {
+        editImageFileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    editImagePreview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                editImagePreview.src = 'https://placehold.co/150x150/e0e0e0/555555?text=Preview';
+            }
+        });
+    }
+
+    // Event listener for URL input change to update preview
+    const editImageUrlInput = document.getElementById('edit-image-url-input');
+    if (editImageUrlInput) {
+        editImageUrlInput.addEventListener('input', (event) => {
+            const url = event.target.value;
+            if (url && (url.startsWith('http://') || url.startsWith('https://'))) {
+                editImagePreview.src = url;
+            } else {
+                editImagePreview.src = 'https://placehold.co/150x150/e0e0e0/555555?text=Preview';
+            }
+        });
+    }
+
 
     const backupDataBtn = document.getElementById('backup-data-btn');
     const restoreFileInput = document.getElementById('restore-file-input');

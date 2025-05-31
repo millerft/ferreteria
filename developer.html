@@ -58,17 +58,7 @@
                     </div>
                     <h4 class="text-xl font-semibold mb-3">Categorías Existentes:</h4>
                     <ul id="category-list" class="space-y-2">
-                        <li class="flex items-center justify-between py-1 border-b border-gray-200">
-                            <div class="flex items-center">
-                                <img src="https://placehold.co/100x100/e0e0e0/555555?text=Cat" alt="Categoría Ejemplo" class="w-8 h-8 rounded-full mr-2 object-cover">
-                                <span class="font-medium">Categoría de Ejemplo</span>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="cat-example" data-item-type="category">Editar Imagen</button>
-                                <button class="delete-category-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-category-id="cat-example">Eliminar</button>
-                            </div>
-                        </li>
-                    </ul>
+                        </ul>
                 </div>
 
                 <div class="mb-8 p-6 bg-gray-100 rounded-lg shadow-sm">
@@ -113,20 +103,7 @@
 
                     <h4 class="text-xl font-semibold mb-3">Lista de Productos:</h4>
                     <ul id="product-list-dev" class="space-y-2">
-                        <li class="flex items-center justify-between py-1 border-b border-gray-200">
-                            <div class="flex items-center space-x-2">
-                                <img src="https://placehold.co/100x100/e0e0e0/555555?text=Prod" alt="Producto Ejemplo" class="w-8 h-8 rounded-full mr-2 object-cover">
-                                <span class="font-medium">Producto de Ejemplo</span>
-                                <span class="text-gray-500 text-xs">(Categoría)</span>
-                                <span class="text-gray-700 text-sm font-bold">Stock: 50</span>
-                            </div>
-                            <div class="flex space-x-2">
-                                <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="prod-example" data-item-type="product">Editar Imagen</button>
-                                <button class="edit-stock-btn bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition duration-300 text-sm" data-product-id="prod-example">Editar Stock</button>
-                                <button class="delete-product-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-product-id="prod-example">Eliminar</button>
-                            </div>
-                        </li>
-                    </ul>
+                        </ul>
                 </div>
 
                 <div class="p-6 bg-gray-100 rounded-lg shadow-sm">
@@ -190,10 +167,38 @@
                 <p class="text-center text-lg mb-4">Elemento: <span id="edit-image-item-name" class="font-bold"></span></p>
                 <form id="edit-image-form" class="space-y-4">
                     <input type="hidden" id="edit-image-item-id">
-                    <input type="hidden" id="edit-image-item-category-type"> <div>
-                        <label for="edit-image-file-input" class="block text-gray-700 text-sm font-bold mb-2">Seleccionar Nueva Imagen:</label>
-                        <input type="file" id="edit-image-file-input" accept="image/*" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <input type="hidden" id="edit-image-item-category-type"> <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-bold mb-2">Seleccionar tipo de entrada:</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="image-input-type" value="file" class="form-radio text-blue-600" checked>
+                                <span class="ml-2 text-gray-700">Subir Archivo</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="image-input-type" value="url" class="form-radio text-blue-600">
+                                <span class="ml-2 text-gray-700">Usar URL</span>
+                            </label>
+                        </div>
                     </div>
+
+                    <div id="image-file-input-container" class="space-y-4">
+                        <div>
+                            <label for="edit-image-file-input" class="block text-gray-700 text-sm font-bold mb-2">Seleccionar Nueva Imagen (Archivo):</label>
+                            <input type="file" id="edit-image-file-input" accept="image/*" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+                    </div>
+
+                    <div id="image-url-input-container" class="space-y-4 hidden">
+                        <div>
+                            <label for="edit-image-url-input" class="block text-gray-700 text-sm font-bold mb-2">Ingresar Nueva Imagen (URL):</label>
+                            <input type="text" id="edit-image-url-input" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ej: https://ejemplo.com/imagen.jpg">
+                        </div>
+                    </div>
+
+                    <div class="mt-4 flex justify-center">
+                        <img id="edit-image-preview" src="https://placehold.co/150x150/e0e0e0/555555?text=Previsualizar" alt="Previsualización de Imagen" class="w-36 h-36 object-cover rounded-md border border-gray-300">
+                    </div>
+
                     <p id="edit-image-message" class="text-center text-sm text-red-500 mt-2"></p>
                     <div class="flex justify-end space-x-4">
                         <button type="button" id="cancel-image-edit-btn" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition duration-300">Cancelar</button>
