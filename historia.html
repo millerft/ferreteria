@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ferretería XYZ - Modo Desarrollador</title>
+    <title>Ferretería XYZ - Nuestra Historia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="header.css">
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="developer.css"> </head>
-<body class="developer-mode-body"> <div class="min-h-screen flex flex-col">
+</head>
+<body class="font-inter bg-gray-50 text-gray-800">
+    <div class="min-h-screen flex flex-col">
         <nav class="bg-blue-700 p-4 shadow-lg">
             <div class="container mx-auto flex justify-between items-center">
                 <a href="index.html" class="text-white text-2xl font-bold rounded-md px-3 py-2 hover:bg-blue-600 transition duration-300">Ferretería XYZ</a>
@@ -20,7 +21,7 @@
                     <a href="contactanos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Contáctanos</a>
                     <a href="reclamos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Reclamos</a>
                     <a href="recomendaciones.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Recomendaciones</a>
-                    <a href="index.html" class="relative bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 ml-4 flex items-center justify-center">
+                    <a href="index.html" id="cart-button" class="relative bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 ml-4 flex items-center justify-center">
                         <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zm-8.7-17.5L3.3 5.4c-.4.8-.1 1.7.7 2.1l15.8 4.6c.8.2 1.7-.1 2.1-.9l2.4-8.2c.4-.8.1-1.7-.7-2.1L4.7.5c-.8-.2-1.7.1-2.1.9zM20 11.5L4.2 6.9c-.2-.1-.4-.1-.6 0L1.2 7.7c-.2.1-.3.3-.3.5s.1.4.3.5l1.5.5c.2.1.4.1.6 0l15.8-4.6c.2-.1.4-.1.6 0l2.4 8.2c.2.5-.1 1.1-.6 1.3zM18 13H6c-1.1 0-2 .9-2 2v2h16v-2c0-1.1-.9-2-2-2z"/>
                         </svg>
@@ -36,127 +37,103 @@
         </nav>
 
         <main class="flex-grow container mx-auto p-6 space-y-12">
-
-            <section id="developer-mode-content" class="card max-w-2xl mx-auto hidden">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-3xl section-title">Modo Desarrollador</h2>
-                    <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300">Cerrar Sesión</button>
-                </div>
-
-                <div class="mb-8 p-6 bg-gray-100 rounded-lg shadow-sm">
-                    <h3 class="text-2xl font-semibold mb-4">Gestión de Categorías</h3>
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label for="category-name" class="block text-gray-700 text-sm font-bold mb-2">Nombre de la Categoría:</label>
-                            <input type="text" id="category-name" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ej: Herramientas Manuales">
-                        </div>
-                        <div>
-                            <label for="category-image-file" class="block text-gray-700 text-sm font-bold mb-2">Imagen de Categoría:</label>
-                            <input type="file" id="category-image-file" accept="image/*" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <button id="add-category-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 w-full">Añadir Categoría</button>
-                    </div>
-                    <h4 class="text-xl font-semibold mb-3">Categorías Existentes:</h4>
-                    <ul id="category-list" class="space-y-2">
-                        </ul>
-                </div>
-
-                <div class="mb-8 p-6 bg-gray-100 rounded-lg shadow-sm">
-                    <h3 class="text-2xl font-semibold mb-4">Gestión de Productos</h3>
-                    <div class="space-y-4 mb-6">
-                        <div>
-                            <label for="product-name" class="block text-gray-700 text-sm font-bold mb-2">Nombre del Producto:</label>
-                            <input type="text" id="product-name" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ej: Martillo de Uña">
-                        </div>
-                        <div>
-                            <label for="product-description" class="block text-gray-700 text-sm font-bold mb-2">Descripción:</label>
-                            <textarea id="product-description" rows="3" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Descripción detallada del producto."></textarea>
-                        </div>
-                        <div>
-                            <label for="product-price" class="block text-gray-700 text-sm font-bold mb-2">Precio:</label>
-                            <input type="number" id="product-price" step="0.01" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ej: 15.99">
-                        </div>
-                        <div>
-                            <label for="product-stock" class="block text-gray-700 text-sm font-bold mb-2">Stock:</label>
-                            <input type="number" id="product-stock" step="1" min="0" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ej: 100">
-                        </div>
-                        <div>
-                            <label for="product-image-file" class="block text-gray-700 text-sm font-bold mb-2">Imagen de Producto:</label>
-                            <input type="file" id="product-image-file" accept="image/*" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        </div>
-                        <div>
-                            <label for="product-category" class="block text-gray-700 text-sm font-bold mb-2">Categoría:</label>
-                            <select id="product-category" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                <option value="">Selecciona una categoría</option>
-                                </select>
-                        </div>
-                        <button id="add-product-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 w-full">Añadir Producto</button>
-                    </div>
-
-                    <h4 class="text-xl font-semibold mb-3">Buscar y Gestionar Productos Existentes:</h4>
-                    <div class="mb-4 space-y-3">
-                        <input type="text" id="developer-product-search" placeholder="Buscar producto por nombre o descripción..." class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <select id="developer-product-dropdown" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                            <option value="">-- Selecciona un producto para editar --</option>
-                            </select>
-                    </div>
-
-                    <h4 class="text-xl font-semibold mb-3">Lista de Productos:</h4>
-                    <ul id="product-list-dev" class="space-y-2">
-                        </ul>
-                </div>
-
-                <div class="p-6 bg-gray-100 rounded-lg shadow-sm">
-                    <h3 class="text-2xl font-semibold mb-4">Respaldo y Carga de Datos</h3>
-                    <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                        <button id="backup-data-btn" class="bg-purple-500 text-white px-4 py-2 rounded-md hover:bg-purple-600 transition duration-300 flex-grow">Descargar Respaldo</button>
-                        <label for="restore-file-input" class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 flex-grow text-center cursor-pointer">
-                            Cargar Respaldo
-                            <input type="file" id="restore-file-input" accept=".json" class="hidden">
-                        </label>
-                    </div>
-                    <p id="restore-message" class="text-sm text-gray-600 mt-2 text-center"></p>
-                </div>
-
+            <section class="text-center py-12 bg-white rounded-lg shadow-md">
+                <h1 class="text-5xl font-extrabold text-blue-800 mb-6">Nuestra Historia</h1>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Un legado de servicio y calidad en herramientas y materiales de ferretería.</p>
             </section>
 
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-12">
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold text-gray-900">Los Inicios: 1985</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Ferretería XYZ fue fundada en 1985 por el visionario Don Pedro Martínez. Con una pequeña tienda en el corazón de la ciudad, Don Pedro se propuso ofrecer a la comunidad local herramientas de alta calidad y un servicio al cliente excepcional. En esos primeros años, la tienda se ganó rápidamente la confianza de los vecinos gracias a su compromiso con la durabilidad y la atención personalizada.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Desde el principio, Don Pedro entendió que el éxito no solo radicaba en los productos, sino en construir relaciones sólidas con sus clientes, asesorándolos en cada proyecto, grande o pequeño.
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1587840134015-8494c2a472c7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Ferretería en 1985" class="rounded-lg shadow-xl w-full max-w-md">
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-12 bg-white rounded-lg shadow-md">
+                <div class="flex justify-center order-2 md:order-1">
+                    <img src="https://images.unsplash.com/photo-1542838118-2081f2f0b3e7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Crecimiento y Expansión" class="rounded-lg shadow-xl w-full max-w-md">
+                </div>
+                <div class="space-y-6 order-1 md:order-2">
+                    <h2 class="text-4xl font-bold text-gray-900">Crecimiento y Expansión: Décadas de 1990 y 2000</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Durante las décadas de 1990 y 2000, Ferretería XYZ experimentó un crecimiento significativo. La demanda de productos de calidad y el boca a boca positivo permitieron a la tienda expandir su inventario y su equipo. Se incorporaron nuevas líneas de productos, desde materiales de construcción hasta equipos de jardinería, siempre manteniendo el estándar de calidad que Don Pedro había establecido.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        La ferretería se convirtió en un pilar para contratistas, artesanos y aficionados al bricolaje, ofreciendo no solo productos, sino también conocimientos y soluciones prácticas.
+                    </p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center py-12">
+                <div class="space-y-6">
+                    <h2 class="text-4xl font-bold text-gray-900">Innovación y Futuro: 2010 en adelante</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Con la llegada del nuevo milenio, Ferretería XYZ abrazó la innovación. Se implementaron sistemas de gestión de inventario modernos y se lanzó nuestra plataforma en línea, permitiendo a los clientes acceder a nuestros productos desde cualquier lugar. Esta digitalización nos ha permitido llegar a una audiencia más amplia, manteniendo la esencia de nuestro servicio personalizado.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Hoy, Ferretería XYZ sigue siendo un negocio familiar, comprometido con los valores de calidad, confianza y comunidad que Don Pedro inculcó. Miramos hacia el futuro con la misma pasión, buscando nuevas formas de servir a nuestros clientes y adaptarnos a las necesidades cambiantes del mercado, siempre con la promesa de ser tu ferretería de confianza.
+                    </p>
+                </div>
+                <div class="flex justify-center">
+                    <img src="https://images.unsplash.com/photo-1621905252507-69539744654b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80" alt="Ferretería Actual" class="rounded-lg shadow-xl w-full max-w-md">
+                </div>
+            </section>
         </main>
 
-        <div id="admin-login-modal" class="modal">
-            <div class="modal-content admin-modal-content">
-                <h2 class="text-3xl section-title mb-6 text-center">Acceso de Administrador</h2>
-                <form id="admin-login-form" class="space-y-4">
+        <div id="cart-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-cart-modal">&times;</span>
+                <h2 class="text-2xl font-bold mb-4">Tu Carrito de Compras</h2>
+                <ul id="cart-items" class="space-y-4 mb-6">
+                    </ul>
+                <div class="text-right text-xl font-bold mb-6">
+                    Total: <span id="cart-total">$0.00</span>
+                </div>
+                <button id="proceed-to-checkout-btn" class="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition duration-300 w-full">Proceder al Pago</button>
+            </div>
+        </div>
+
+        <div id="personal-data-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-personal-data-modal">&times;</span>
+                <h2 class="text-2xl font-bold mb-4">Datos del Cliente</h2>
+                <form id="personal-data-form" class="space-y-4">
                     <div>
-                        <label for="admin-username" class="block text-gray-700 text-sm font-bold mb-2">Usuario:</label>
-                        <input type="text" id="admin-username" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Usuario">
+                        <label for="customer-name" class="block text-gray-700 text-sm font-bold mb-2">Nombre Completo:</label>
+                        <input type="text" id="customer-name" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
                     <div>
-                        <label for="admin-password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña:</label>
-                        <input type="password" id="admin-password" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Contraseña">
+                        <label for="customer-dni" class="block text-gray-700 text-sm font-bold mb-2">DNI/RUC:</label>
+                        <input type="text" id="customer-dni" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                     </div>
-                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full">Iniciar Sesión</button>
-                    <p id="login-message" class="text-center text-sm text-red-500 mt-2"></p>
+                    <div>
+                        <label for="customer-address" class="block text-gray-700 text-sm font-bold mb-2">Dirección:</label>
+                        <input type="text" id="customer-address" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div>
+                        <label for="customer-email" class="block text-gray-700 text-sm font-bold mb-2">Email:</label>
+                        <input type="email" id="customer-email" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition duration-300 w-full">Generar Comprobante</button>
                 </form>
             </div>
         </div>
 
-        <div id="edit-stock-modal" class="modal">
-            <div class="modal-content admin-modal-content">
-                <span class="close-button" id="close-edit-stock-modal">&times;</span>
-                <h2 class="text-2xl font-semibold mb-4 text-center">Editar Stock de Producto</h2>
-                <p class="text-center text-lg mb-4">Producto: <span id="edit-stock-product-name" class="font-bold"></span></p>
-                <form id="edit-stock-form" class="space-y-4">
-                    <input type="hidden" id="edit-stock-product-id">
-                    <div>
-                        <label for="edit-stock-input" class="block text-gray-700 text-sm font-bold mb-2">Nuevo Stock:</label>
-                        <input type="number" id="edit-stock-input" step="1" min="0" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese el nuevo stock">
+        <div id="receipt-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-receipt-modal">&times;</span>
+                <h2 class="text-2xl font-bold mb-4 text-center">Comprobante de Pago</h2>
+                <div id="receipt-details" class="bg-gray-100 p-4 rounded-md mb-6">
                     </div>
-                    <p id="edit-stock-message" class="text-center text-sm text-red-500 mt-2"></p>
-                    <div class="flex justify-end space-x-4">
-                        <button type="button" id="cancel-stock-edit-btn" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition duration-300">Cancelar</button>
-                        <button type="submit" id="save-stock-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Guardar Cambios</button>
-                    </div>
-                </form>
+                <button id="download-pdf-btn" class="bg-purple-600 text-white px-6 py-3 rounded-md hover:bg-purple-700 transition duration-300 w-full">Descargar PDF</button>
             </div>
         </div>
 
@@ -170,6 +147,7 @@
             </div>
         </footer>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

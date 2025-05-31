@@ -16,10 +16,11 @@
                 <div class="flex space-x-4 items-center">
                     <a href="index.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Inventario</a>
                     <a href="historia.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Historia</a>
-                    <a href="sobre-nosotros.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Contáctanos</a>
+                    <a href="sobre-nosotros.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Sobre Nosotros</a>
+                    <a href="contactanos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Contáctanos</a>
                     <a href="reclamos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Reclamos</a>
                     <a href="recomendaciones.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Recomendaciones</a>
-                    <a href="index.html" class="relative bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 ml-4 flex items-center justify-center">
+                    <a href="index.html" id="cart-button" class="relative bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 ml-4 flex items-center justify-center">
                         <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zm-8.7-17.5L3.3 5.4c-.4.8-.1 1.7.7 2.1l15.8 4.6c.8.2 1.7-.1 2.1-.9l2.4-8.2c.4-.8.1-1.7-.7-2.1L4.7.5c-.8-.2-1.7.1-2.1.9zM20 11.5L4.2 6.9c-.2-.1-.4-.1-.6 0L1.2 7.7c-.2.1-.3.3-.3.5s.1.4.3.5l1.5.5c.2.1.4.1.6 0l15.8-4.6c.2-.1.4-.1.6 0l2.4 8.2c.2.5-.1 1.1-.6 1.3zM18 13H6c-1.1 0-2 .9-2 2v2h16v-2c0-1.1-.9-2-2-2z"/>
                         </svg>
@@ -57,7 +58,17 @@
                     </div>
                     <h4 class="text-xl font-semibold mb-3">Categorías Existentes:</h4>
                     <ul id="category-list" class="space-y-2">
-                        </ul>
+                        <li class="flex items-center justify-between py-1 border-b border-gray-200">
+                            <div class="flex items-center">
+                                <img src="https://placehold.co/100x100/e0e0e0/555555?text=Cat" alt="Categoría Ejemplo" class="w-8 h-8 rounded-full mr-2 object-cover">
+                                <span class="font-medium">Categoría de Ejemplo</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="cat-example" data-item-type="category">Editar Imagen</button>
+                                <button class="delete-category-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-category-id="cat-example">Eliminar</button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="mb-8 p-6 bg-gray-100 rounded-lg shadow-sm">
@@ -102,7 +113,20 @@
 
                     <h4 class="text-xl font-semibold mb-3">Lista de Productos:</h4>
                     <ul id="product-list-dev" class="space-y-2">
-                        </ul>
+                        <li class="flex items-center justify-between py-1 border-b border-gray-200">
+                            <div class="flex items-center space-x-2">
+                                <img src="https://placehold.co/100x100/e0e0e0/555555?text=Prod" alt="Producto Ejemplo" class="w-8 h-8 rounded-full mr-2 object-cover">
+                                <span class="font-medium">Producto de Ejemplo</span>
+                                <span class="text-gray-500 text-xs">(Categoría)</span>
+                                <span class="text-gray-700 text-sm font-bold">Stock: 50</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="prod-example" data-item-type="product">Editar Imagen</button>
+                                <button class="edit-stock-btn bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition duration-300 text-sm" data-product-id="prod-example">Editar Stock</button>
+                                <button class="delete-product-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-product-id="prod-example">Eliminar</button>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
                 <div class="p-6 bg-gray-100 rounded-lg shadow-sm">
@@ -149,11 +173,31 @@
                     <div>
                         <label for="edit-stock-input" class="block text-gray-700 text-sm font-bold mb-2">Nuevo Stock:</label>
                         <input type="number" id="edit-stock-input" step="1" min="0" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Ingrese el nuevo stock">
-                        </div>
+                    </div>
                     <p id="edit-stock-message" class="text-center text-sm text-red-500 mt-2"></p>
                     <div class="flex justify-end space-x-4">
                         <button type="button" id="cancel-stock-edit-btn" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition duration-300">Cancelar</button>
                         <button type="submit" id="save-stock-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div id="edit-image-modal" class="modal">
+            <div class="modal-content admin-modal-content">
+                <span class="close-button" id="close-edit-image-modal">&times;</span>
+                <h2 class="text-2xl font-semibold mb-4 text-center">Editar Imagen de <span id="edit-image-item-type" class="capitalize"></span></h2>
+                <p class="text-center text-lg mb-4">Elemento: <span id="edit-image-item-name" class="font-bold"></span></p>
+                <form id="edit-image-form" class="space-y-4">
+                    <input type="hidden" id="edit-image-item-id">
+                    <input type="hidden" id="edit-image-item-category-type"> <div>
+                        <label for="edit-image-file-input" class="block text-gray-700 text-sm font-bold mb-2">Seleccionar Nueva Imagen:</label>
+                        <input type="file" id="edit-image-file-input" accept="image/*" class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    </div>
+                    <p id="edit-image-message" class="text-center text-sm text-red-500 mt-2"></p>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" id="cancel-image-edit-btn" class="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500 transition duration-300">Cancelar</button>
+                        <button type="submit" id="save-image-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Guardar Imagen</button>
                     </div>
                 </form>
             </div>

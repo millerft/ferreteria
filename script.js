@@ -213,7 +213,7 @@ function generateReceipt(customerData) {
         return;
     }
 
-    // --- INICIO DE LA CORRECCIÓN: Deducir stock de productos ---
+    // Deducir stock de productos
     cart.forEach(cartItem => {
         const productIndex = products.findIndex(p => p.id === cartItem.id);
         if (productIndex > -1) {
@@ -225,7 +225,6 @@ function generateReceipt(customerData) {
         }
     });
     saveProducts(); // Guardar los productos con el stock actualizado
-    // --- FIN DE LA CORRECCIÓN ---
 
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     const igvAmount = subtotal * IGV_RATE;
@@ -403,7 +402,10 @@ function renderCategories() {
                     <img src="${cat.imageUrl}" onerror="this.onerror=null;this.src='https://placehold.co/100x100/e0e0e0/555555?text=Categoría';" alt="${cat.name}" class="w-8 h-8 rounded-full mr-2 object-cover">
                     <span class="font-medium">${cat.name}</span>
                 </div>
-                <button class="delete-category-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-category-id="${cat.id}">Eliminar</button>
+                <div class="flex space-x-2">
+                    <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="${cat.id}" data-item-type="category" data-item-name="${cat.name}">Editar Imagen</button>
+                    <button class="delete-category-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-category-id="${cat.id}">Eliminar</button>
+                </div>
             `;
             categoryListUl.appendChild(listItem);
         }
@@ -415,12 +417,21 @@ function renderCategories() {
         }
     });
 
-    // Attach delete category event listeners
+    // Attach delete category event listeners (delegated)
     if (categoryListUl) {
         categoryListUl.querySelectorAll('.delete-category-btn').forEach(button => {
             button.addEventListener('click', (event) => {
                 const categoryIdToDelete = event.target.dataset.categoryId;
                 deleteCategory(categoryIdToDelete);
+            });
+        });
+        // Attach edit image event listeners for categories (delegated)
+        categoryListUl.querySelectorAll('.edit-image-btn').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const itemId = event.target.dataset.itemId;
+                const itemType = event.target.dataset.itemType;
+                const itemName = event.target.dataset.itemName;
+                editImage(itemId, itemType, itemName);
             });
         });
     }
@@ -584,6 +595,7 @@ function renderProductsDevMode(filter = '', selectedProductId = '') {
                 <span class="text-gray-700 text-sm font-bold">Stock: ${product.stock}</span>
             </div>
             <div class="flex space-x-2">
+                <button class="edit-image-btn bg-indigo-500 text-white px-3 py-1 rounded-md hover:bg-indigo-600 transition duration-300 text-sm" data-item-id="${product.id}" data-item-type="product" data-item-name="${product.name}">Editar Imagen</button>
                 <button class="edit-stock-btn bg-yellow-500 text-white px-3 py-1 rounded-md hover:bg-yellow-600 transition duration-300 text-sm" data-product-id="${product.id}">Editar Stock</button>
                 <button class="delete-product-btn bg-red-400 text-white px-3 py-1 rounded-md hover:bg-red-500 transition duration-300 text-sm" data-product-id="${product.id}">Eliminar</button>
             </div>
@@ -618,6 +630,16 @@ function renderProductsDevMode(filter = '', selectedProductId = '') {
                 editStockMessage.textContent = ''; // Limpia cualquier mensaje anterior
                 editStockModal.style.display = 'flex'; // Muestra el modal
             }
+        });
+    });
+
+    // Attach edit image event listeners for products (delegated)
+    productListDevUl.querySelectorAll('.edit-image-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const itemId = event.target.dataset.itemId;
+            const itemType = event.target.dataset.itemType;
+            const itemName = event.target.dataset.itemName;
+            editImage(itemId, itemType, itemName);
         });
     });
 }
@@ -690,6 +712,82 @@ function editProductStock(productId, newStock) {
         console.error(`Producto con ID ${productId} no encontrado para editar stock.`);
     }
 }
+
+// Function to open the image edit modal
+function editImage(itemId, itemType, itemName) {
+    const editImageModal = document.getElementById('edit-image-modal');
+    const editImageItemTypeSpan = document.getElementById('edit-image-item-type');
+    const editImageItemNameSpan = document.getElementById('edit-image-item-name');
+    const editImageItemIdInput = document.getElementById('edit-image-item-id');
+    const editImageItemCategoryTypeInput = document.getElementById('edit-image-item-category-type');
+    const editImageMessage = document.getElementById('edit-image-message');
+    const editImageFileInput = document.getElementById('edit-image-file-input');
+
+    editImageItemTypeSpan.textContent = itemType === 'category' ? 'Categoría' : 'Producto';
+    editImageItemNameSpan.textContent = itemName;
+    editImageItemIdInput.value = itemId;
+    editImageItemCategoryTypeInput.value = itemType;
+    editImageMessage.textContent = ''; // Clear previous messages
+    editImageFileInput.value = ''; // Clear file input
+
+    editImageModal.style.display = 'flex';
+}
+
+// Function to save the edited image
+function saveImageEdit() {
+    const itemId = document.getElementById('edit-image-item-id').value;
+    const itemType = document.getElementById('edit-image-item-category-type').value;
+    const imageFile = document.getElementById('edit-image-file-input').files[0];
+    const editImageMessage = document.getElementById('edit-image-message');
+
+    if (!imageFile) {
+        editImageMessage.textContent = 'Por favor, selecciona una imagen.';
+        editImageMessage.style.color = 'red';
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        const newImageUrl = reader.result;
+        if (itemType === 'category') {
+            const categoryIndex = categories.findIndex(cat => cat.id === itemId);
+            if (categoryIndex > -1) {
+                categories[categoryIndex].imageUrl = newImageUrl;
+                saveCategories();
+                renderCategories();
+                renderCategoryFilters(); // Update category filter on index.html
+                editImageMessage.textContent = 'Imagen de categoría actualizada exitosamente.';
+                editImageMessage.style.color = 'green';
+            } else {
+                editImageMessage.textContent = 'Error: Categoría no encontrada.';
+                editImageMessage.style.color = 'red';
+            }
+        } else if (itemType === 'product') {
+            const productIndex = products.findIndex(prod => prod.id === itemId);
+            if (productIndex > -1) {
+                products[productIndex].imageUrl = newImageUrl;
+                saveProducts();
+                renderProductsDevMode();
+                renderProducts(); // Update product display on index.html
+                editImageMessage.textContent = 'Imagen de producto actualizada exitosamente.';
+                editImageMessage.style.color = 'green';
+            } else {
+                editImageMessage.textContent = 'Error: Producto no encontrado.';
+                editImageMessage.style.color = 'red';
+            }
+        }
+        setTimeout(() => {
+            document.getElementById('edit-image-modal').style.display = 'none';
+            editImageMessage.textContent = '';
+        }, 1500); // Hide modal after a short delay
+    };
+    reader.onerror = () => {
+        editImageMessage.textContent = 'Error al leer el archivo de imagen.';
+        editImageMessage.style.color = 'red';
+    };
+    reader.readAsDataURL(imageFile);
+}
+
 
 // --- Backup and Restore Functions ---
 
@@ -873,6 +971,12 @@ document.addEventListener('DOMContentLoaded', () => {
             editStockModal.style.display = 'none';
             document.getElementById('edit-stock-message').textContent = ''; // Clear message on close
         }
+        // Close edit image modal if it exists and click is outside
+        const editImageModal = document.getElementById('edit-image-modal');
+        if (editImageModal && event.target === editImageModal) {
+            editImageModal.style.display = 'none';
+            document.getElementById('edit-image-message').textContent = ''; // Clear message on close
+        }
     });
 
 
@@ -911,6 +1015,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const saveStockBtn = document.getElementById('save-stock-btn');
     const cancelStockEditBtn = document.getElementById('cancel-stock-edit-btn');
     const editStockMessage = document.getElementById('edit-stock-message'); // For validation messages in stock modal
+
+    // Edit Image Modal elements
+    const editImageModal = document.getElementById('edit-image-modal');
+    const closeEditImageModalBtn = document.getElementById('close-edit-image-modal');
+    const cancelImageEditBtn = document.getElementById('cancel-image-edit-btn');
+    const editImageForm = document.getElementById('edit-image-form');
 
 
     if (adminLoginModal) {
@@ -1010,6 +1120,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 editStockMessage.textContent = 'El stock debe ser un número válido y no negativo.';
                 editStockMessage.style.color = 'red';
             }
+        });
+    }
+
+    // Event listeners for the new Edit Image Modal
+    if (closeEditImageModalBtn) {
+        closeEditImageModalBtn.addEventListener('click', () => {
+            editImageModal.style.display = 'none';
+            document.getElementById('edit-image-message').textContent = ''; // Clear message on close
+        });
+    }
+
+    if (cancelImageEditBtn) {
+        cancelImageEditBtn.addEventListener('click', () => {
+            editImageModal.style.display = 'none';
+            document.getElementById('edit-image-message').textContent = ''; // Clear message on cancel
+        });
+    }
+
+    if (editImageForm) {
+        editImageForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            saveImageEdit();
         });
     }
 
