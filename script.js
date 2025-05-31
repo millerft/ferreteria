@@ -1,7 +1,4 @@
 // script.js
-// Importa los datos iniciales desde data.js
-import { initialCategories, initialProducts } from './data.js';
-
 // Arrays para almacenar los productos en el carrito
 let cart = [];
 let categories = [];
@@ -48,14 +45,24 @@ function initializeData() {
         }
     }
 
-    // Si no hay productos ni categorías en localStorage, usar los datos iniciales de data.js
+    // Si no hay productos ni categorías, añadir algunos de ejemplo
     if (products.length === 0 && categories.length === 0) {
-        categories = [...initialCategories]; // Usar una copia para no modificar el array original
-        products = [...initialProducts];     // Usar una copia
-        saveCategories(); // Guardar los datos iniciales en localStorage por primera vez
-        saveProducts();   // Guardar los datos iniciales en localStorage por primera vez
+        categories = [
+            { id: 'cat-1', name: 'Herramientas Manuales', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Manual' },
+            { id: 'cat-2', name: 'Fijaciones', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Fijaciones' },
+            { id: 'cat-3', name: 'Medición', imageUrl: 'https://placehold.co/100x100/e0e0e0/555555?text=Medicion' }
+        ];
+        products = [
+            { id: 'prod-1', name: 'Martillo de Uña', description: 'Un martillo robusto para trabajos de carpintería y construcción.', price: 15.99, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Martillo', categoryId: 'cat-1', stock: 50 },
+            { id: 'prod-2', name: 'Set de Tornillos Variados', description: 'Caja con tornillos de diferentes tamaños y tipos.', price: 8.50, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Tornillos', categoryId: 'cat-2', stock: 120 },
+            { id: 'prod-3', name: 'Cinta Métrica 5m', description: 'Cinta métrica retráctil de alta precisión.', price: 7.25, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Cinta+Métrica', categoryId: 'cat-3', stock: 75 },
+            { id: 'prod-4', name: 'Taladro Inalámbrico', description: 'Ideal para perforar y atornillar en madera, metal y plástico.', price: 79.99, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Taladro', categoryId: 'cat-1', stock: 30 },
+            { id: 'prod-5', name: 'Llave Inglesa Ajustable', description: 'Una herramienta esencial para cualquier caja de herramientas.', price: 12.50, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Llave+Inglesa', categoryId: 'cat-1', stock: 90 },
+            { id: 'prod-6', name: 'Set de Destornilladores', description: 'Variedad de puntas para todo tipo de tornillos.', price: 25.00, imageUrl: 'https://placehold.co/300x200/e0e0e0/555555?text=Set+Destornilladores', categoryId: 'cat-1', stock: 60 }
+        ];
+        saveCategories();
+        saveProducts();
     }
-    
     updateCartDisplay(); // Actualizar el contador del carrito en todas las páginas
     renderProducts(); // Renderizar productos en index.html
     renderCategoryFilters(); // Renderizar las categorías en el filtro de index.html
