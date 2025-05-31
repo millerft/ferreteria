@@ -1,0 +1,257 @@
+/* developer.css - Estilos para el Modo Desarrollador (Alternativo) */
+
+/* Estilos generales para el cuerpo del modo desarrollador */
+body.developer-mode-body {
+    background-color: #f8fafc; /* Un gris muy claro, casi blanco */
+    color: #334155; /* Texto oscuro para buena legibilidad */
+    font-family: 'Inter', sans-serif;
+}
+
+/* Estilos para el modal de inicio de sesión del administrador */
+.admin-modal-content {
+    max-width: 420px; /* Ancho ajustado para el modal de login */
+    padding: 2rem;
+    background-color: #ffffff; /* Fondo blanco puro */
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Sombra suave y elegante */
+    border: 1px solid #e2e8f0; /* Borde muy sutil */
+}
+
+#admin-login-modal .section-title {
+    color: #1e293b; /* Título oscuro para el modal */
+    border-bottom: 2px solid #60a5fa; /* Borde inferior azul claro y fresco */
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+#admin-login-form label {
+    color: #475569; /* Etiquetas en gris oscuro */
+    font-weight: 500;
+}
+
+#admin-login-form input[type="text"],
+#admin-login-form input[type="password"] {
+    background-color: #f1f5f9; /* Fondo gris claro para inputs */
+    border: 1px solid #cbd5e1; /* Borde gris medio */
+    color: #1e293b; /* Texto oscuro */
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#admin-login-form input:focus {
+    border-color: #3b82f6; /* Azul brillante al enfocar */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    background-color: #ffffff;
+}
+
+#admin-login-form button[type="submit"] {
+    background-color: #3b82f6; /* Azul principal para el botón de login */
+    color: #ffffff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.025em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#admin-login-form button[type="submit"]:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+#login-message {
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+    background-color: #fee2e2; /* Fondo rojo claro para errores */
+    color: #dc2626; /* Texto rojo */
+    border: 1px solid #fca5a5;
+}
+
+
+/* Estilos para los títulos dentro del modo desarrollador */
+#developer-mode-content .section-title {
+    color: #1e293b; /* Títulos de sección oscuros */
+    border-bottom: 2px solid #60a5fa; /* Borde inferior azul claro */
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.25rem;
+    text-align: left; /* Alineación a la izquierda */
+}
+
+/* Estilos para las tarjetas de gestión (categorías, productos, respaldo) */
+#developer-mode-content .card {
+    background-color: #ffffff; /* Fondo blanco para las tarjetas */
+    border: 1px solid #e2e8f0; /* Borde gris muy claro */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra más suave */
+    transition: all 0.3s ease-in-out;
+}
+
+#developer-mode-content .card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+/* Estilos para los botones de acción (añadir, editar, eliminar) */
+#developer-mode-content button {
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#developer-mode-content button.bg-blue-500 { /* Añadir Categoría / Producto */
+    background-color: #3b82f6;
+    color: #ffffff;
+}
+#developer-mode-content button.bg-blue-500:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#developer-mode-content button.bg-red-400 { /* Eliminar */
+    background-color: #ef4444;
+    color: #ffffff;
+}
+#developer-mode-content button.bg-red-400:hover {
+    background-color: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#developer-mode-content button.bg-yellow-500 { /* Editar Stock */
+    background-color: #facc15;
+    color: #333; /* Texto oscuro para el amarillo */
+}
+#developer-mode-content button.bg-yellow-500:hover {
+    background-color: #eab308;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#developer-mode-content button.bg-purple-500 { /* Descargar Respaldo */
+    background-color: #a855f7;
+    color: #ffffff;
+}
+#developer-mode-content button.bg-purple-500:hover {
+    background-color: #9333ea;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+#developer-mode-content label[for="restore-file-input"] { /* Cargar Respaldo */
+    background-color: #22c55e;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#developer-mode-content label[for="restore-file-input"]:hover {
+    background-color: #16a34a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+
+/* Estilos para las listas de categorías y productos */
+#category-list li,
+#product-list-dev li {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #e2e8f0; /* Borde muy ligero */
+    color: #334155; /* Texto oscuro */
+    background-color: #ffffff; /* Fondo blanco */
+    transition: background-color 0.2s ease;
+}
+
+#category-list li:last-child,
+#product-list-dev li:last-child {
+    border-bottom: none;
+}
+
+#category-list li:nth-child(odd),
+#product-list-dev li:nth-child(odd) {
+    background-color: #f8fafc; /* Fondo ligeramente diferente para filas impares */
+}
+
+#category-list li:hover,
+#product-list-dev li:hover {
+    background-color: #eff6ff; /* Resaltar al pasar el ratón */
+}
+
+
+/* Estilos para los inputs y textareas */
+#developer-mode-content input[type="text"],
+#developer-mode-content input[type="number"],
+#developer-mode-content input[type="file"],
+#developer-mode-content textarea,
+#developer-mode-content select {
+    background-color: #f1f5f9; /* Fondo gris claro para inputs */
+    border: 1px solid #cbd5e1; /* Borde gris medio */
+    color: #1e293b; /* Texto oscuro */
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#developer-mode-content input:focus,
+#developer-mode-content textarea:focus,
+#developer-mode-content select:focus {
+    border-color: #3b82f6; /* Azul brillante al enfocar */
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    background-color: #ffffff;
+}
+
+/* Mensajes de respaldo/restauración */
+#restore-message {
+    font-weight: 500;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+#restore-message.text-green-500 {
+    background-color: #dcfce7; /* Fondo verde muy claro */
+    color: #16a34a; /* Texto verde */
+    border-color: #bbf7d0;
+}
+
+#restore-message.text-red-500 {
+    background-color: #fee2e2; /* Fondo rojo muy claro */
+    color: #dc2626; /* Texto rojo */
+    border-color: #fca5a5;
+}
+
+/* Ajustes para el botón de cargar respaldo */
+label[for="restore-file-input"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    white-space: nowrap;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ocultar el input de archivo real */
+#restore-file-input {
+    display: none;
+}
+
+/* Estilos para las imágenes de categoría y producto en el modo desarrollador */
+#category-list img,
+#product-list-dev img {
+    border: 1px solid #94a3b8; /* Borde gris azulado para las imágenes */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-radius: 0.25rem; /* Bordes ligeramente redondeados */
+}

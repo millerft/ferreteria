@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferretería XYZ - Recomendaciones</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="header.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="min-h-screen flex flex-col">
+        <nav class="bg-blue-700 p-4 shadow-lg">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="index.html" class="text-white text-2xl font-bold rounded-md px-3 py-2 hover:bg-blue-600 transition duration-300">Ferretería XYZ</a>
+                <div class="flex space-x-4 items-center">
+                    <a href="index.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Inventario</a>
+                    <a href="historia.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Historia</a>
+                    <a href="sobre-nosotros.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Sobre Nosotros</a>
+                    <a href="contactanos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Contáctanos</a>
+                    <a href="reclamos.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Reclamos</a>
+                    <a href="recomendaciones.html" class="text-white hover:text-blue-200 transition duration-300 rounded-md px-3 py-2">Recomendaciones</a>
+                    <a href="index.html" class="relative bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300 ml-4 flex items-center justify-center">
+                        <svg class="cart-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zm10 0c-1.1 0-1.99.9-1.99 2S15.9 22 17 22s2-.9 2-2-.9-2-2-2zm-8.7-17.5L3.3 5.4c-.4.8-.1 1.7.7 2.1l15.8 4.6c.8.2 1.7-.1 2.1-.9l2.4-8.2c.4-.8.1-1.7-.7-2.1L4.7.5c-.8-.2-1.7.1-2.1.9zM20 11.5L4.2 6.9c-.2-.1-.4-.1-.6 0L1.2 7.7c-.2.1-.3.3-.3.5s.1.4.3.5l1.5.5c.2.1.4.1.6 0l15.8-4.6c.2-.1.4-.1.6 0l2.4 8.2c.2.5-.1 1.1-.6 1.3zM18 13H6c-1.1 0-2 .9-2 2v2h16v-2c0-1.1-.9-2-2-2z"/>
+                        </svg>
+                        <span id="cart-count" class="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full" style="transform: translate(50%, -50%);">0</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="flex-grow container mx-auto p-6 space-y-12">
+
+            <section id="recomendaciones" class="card">
+                <h2 class="text-3xl section-title mb-6">Recomendaciones</h2>
+                <p class="text-gray-700 mb-4">Explora nuestras recomendaciones de productos populares y herramientas esenciales para tus proyectos.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <img src="https://placehold.co/300x200/e0e0e0/555555?text=Taladro" alt="Taladro Inalámbrico" class="w-full h-40 object-cover rounded-md mb-3">
+                        <h3 class="text-xl font-semibold mb-2">Taladro Inalámbrico</h3>
+                        <p class="text-gray-600 mb-2">Ideal para perforar y atornillar en madera, metal y plástico.</p>
+                        <span class="text-blue-700 font-bold text-lg">$79.99</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <img src="https://placehold.co/300x200/e0e0e0/555555?text=Llave+Inglesa" alt="Llave Inglesa Ajustable" class="w-full h-40 object-cover rounded-md mb-3">
+                        <h3 class="text-xl font-semibold mb-2">Llave Inglesa Ajustable</h3>
+                        <p class="text-gray-600 mb-2">Una herramienta esencial para cualquier caja de herramientas.</p>
+                        <span class="text-blue-700 font-bold text-lg">$12.50</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+                        <img src="https://placehold.co/300x200/e0e0e0/555555?text=Set+Destornilladores" alt="Set de Destornilladores" class="w-full h-40 object-cover rounded-md mb-3">
+                        <h3 class="text-xl font-semibold mb-2">Set de Destornilladores</h3>
+                        <p class="text-gray-600 mb-2">Variedad de puntas para todo tipo de tornillos.</p>
+                        <span class="text-blue-700 font-bold text-lg">$25.00</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bg-gray-800 text-white p-6 mt-12 rounded-t-lg">
+            <div class="container mx-auto text-center">
+                <p>&copy; 2025 Ferretería XYZ. Todos los derechos reservados.</p>
+                <div class="flex justify-center space-x-4 mt-2">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidad</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Términos de Servicio</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
